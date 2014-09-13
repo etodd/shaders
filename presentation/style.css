@@ -98,7 +98,7 @@ input
 	border: none;
 	padding: 0.5em;
 	font-size: 1em;
-	font-family: monospace;
+	font-family: 'Bitstream Vera Sans Mono', monospace;
 }
 
 .reveal table
@@ -108,6 +108,17 @@ input
 }
 
 .reveal table td
+{
+	padding: 0.25em;
+}
+
+.reveal table.matrix td, .reveal table.matrix td
+{
+	padding: 0px;
+	font-family: 'Bitstream Vera Sans Mono', monospace;
+}
+
+table.matrix matrix
 {
 	padding: 0.25em;
 }

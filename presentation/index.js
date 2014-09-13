@@ -14,6 +14,16 @@
 		});
 	}
 
+	function construct(constructor, args)
+	{
+		function F()
+		{
+			return constructor.apply(this, args);
+		}
+		F.prototype = constructor.prototype;
+		return new F();
+	}
+
 	Reveal.initialize(
 	{
 		controls: false,
@@ -70,6 +80,49 @@
 				else if (!event.ctrlKey && (event.which < 48 || event.which > 57))
 					event.preventDefault();
 			}
+		});
+
+		$('table.matrix input').keydown(function(event)
+		{
+			// allow backspace, delete, tab, arrow keys, minus sign, period
+			if (event.which != 8 && event.which != 46 && (event.which < 37 || event.which > 40) && event.which != 18 && event.which != 190)
+			{
+				if (event.which == 9)
+				{
+					// disallow tab on the last input
+					if ($(this).is('.b'))
+						event.preventDefault();
+				}
+				// disallow everything else, and strings longer than three characters
+				else if (!event.ctrlKey && (event.which < 48 || event.which > 57))
+					event.preventDefault();
+			}
+		});
+
+		$('table#matrixa input').on('input', function()
+		{
+			var matrix = [];
+			var vector = [];
+			$('table#matrixa input').each(function(i)
+			{
+				var value = parseFloat($(this).val());
+				if ((i + 1) % 5 == 0)
+					vector.push(value);
+				else
+					matrix.push(value);
+			});
+			var m = construct(THREE.Matrix4, matrix);
+			var v = construct(THREE.Vector4, vector);
+			v.applyMatrix4(m);
+			var result = $('table#matrixa td.result');
+			result[0].innerHTML = v.x.toString();
+			result[1].innerHTML = v.y.toString();
+			result[2].innerHTML = v.z.toString();
+			result[3].innerHTML = v.w.toString();
+
+			var iframe = $('#matrix-sample')[0];
+			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
+			win.matrix = m;
 		});
 	});
 

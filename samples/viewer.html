@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Shaders - How Do They Work?</title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style type="text/css">
+		<script src="three.min.js" id="threejs"></script>
+		<style type="text/css" id="style">
 			html, body
 			{
-				padding: 0px;
-				margin: 0px;
-				width: 100%;
-				height: 100%;
 				background-color: #000;
+				color: #fff;
+				font-family: sans-serif;
+				margin: 0px;
+				padding: 0px;
+			}
+			a#source
+			{
+				padding: 0.25em;
+				cursor: pointer;
+				color: #fff;
+				background-color: #000;
+				position: absolute;
+				top: 1em;
+				left: 1em;
+				z-index: 1;
+				font-size: small;
 			}
 		</style>
 	</head>
 	<body>
-		<script src="three.min.js"></script>
-		<script src="viewer.js"></script>
+		<a id="source">source</a>
+		<script src="viewer.js" id="script"></script>
 	</body>
 </html>

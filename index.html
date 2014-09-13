@@ -18,6 +18,7 @@
 		<link rel="stylesheet" href="presentation/style.css" id="theme">
 
 		<script src="presentation/jquery.min.js"></script>
+		<script src="samples/three.min.js"></script>
 
 		<!--[if lt IE 9]>
 		<script src="reveal.js/lib/js/html5shiv.js"></script>
@@ -78,19 +79,15 @@
 					</div>
 				</section>
 				<section>
-					<h3>draw loop</h3>
-					<ol>
-						<li>process input, calculate new state</li>
-						<li>clear screen</li>
-						<li>draw pixels</li>
-						<li>goto 1</li>
-					</ol>
-					<br />
-					<small>...profit?</small>
+					<h3>screen-space coordinates</h3>
+					<img src="presentation/screen-space-coords.svg" />
+				</section>
+				<section>
+					<h3>immediate mode draw loop</h3>
+					<img src="presentation/draw-loop.svg" />
 				</section>
 				<section>
 					<section>
-						<h3>immediate mode</h3>
 						<pre><code data-trim>
 while (true)
 {     
@@ -115,22 +112,11 @@ while (true)
 					</section>
 					<section>
 						<img src="presentation/immediate-mode.svg" />
-						<br />
-						<small>profit!</small>
 					</section>
 				</section>
 				<section>
-					<h3>screen-space coordinates</h3>
-					<img src="presentation/screen-space-coords.svg" />
-				</section>
-				<section>
-					<h3>vbo</h3>
-					<ul>
-						<li>create a vertex buffer (object)</li>
-						<li>fill it with vertices</li>
-						<li>send it to the gpu (one time)</li>
-						<li>now we can render it without re-sending the data every frame</li>
-					</ul>
+					<h3>vbo draw loop</h3>
+					<img src="presentation/vbo-draw-loop.svg" />
 				</section>
 				<section>
 					<h3>webgl!</h3>
@@ -142,6 +128,86 @@ while (true)
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=triangle.js"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>matrices</h3>
+					<table id="matrixa" class="matrix">
+						<tr>
+							<td><input type="text" size="3" value="1" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td>*</td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td>=</td>
+							<td class="result">1</td>
+						</tr>
+						<tr>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td></td>
+							<td class="result">1</td>
+						</tr>
+						<tr>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td></td>
+							<td class="result">1</td>
+						</tr>
+						<tr>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="0" /></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td></td>
+							<td><input type="text" size="3" value="1" /></td>
+							<td></td>
+							<td class="result">1</td>
+						</tr>
+					</table>
+				</section>
+				<section>
+					<section>
+						<pre><code data-trim data-src="samples/matrix.js"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<table id="matrixb" class="matrix">
+							<tr>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+							</tr>
+						</table>
+						<iframe id="matrix-sample" data-src="samples/viewer.html?js=matrix.js"></iframe>
 					</section>
 				</section>
 				<section>
