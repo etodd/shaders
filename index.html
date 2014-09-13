@@ -17,8 +17,7 @@
 		<link rel="stylesheet" href="reveal.js/css/reveal.min.css">
 		<link rel="stylesheet" href="presentation/style.css" id="theme">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+		<script src="presentation/jquery.min.js"></script>
 
 		<!--[if lt IE 9]>
 		<script src="reveal.js/lib/js/html5shiv.js"></script>
@@ -29,17 +28,105 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h1>Shaders</h1>
-					<h3>How Do They Work?</h3>
+					<h1>shaders</h1>
+					<h3>how do they work?</h3>
 					<small>
-						Evan Todd
+						evan todd
 						| <a href="http://et1337.com">et1337.com</a>
 						| <a href="http://twitter.com/et1337">@et1337</a>
 					</small>
+					<br />
+					&#8592;&#8593;&#8595;&#8594;
+				</section>
+				<section>
+					<h3>talk at me if you're into</h3>
+					<ul>
+						<li>event-driven servers</li>
+						<li>deployment automation</li>
+						<li>private clouds</li>
+						<li>deferred rendering</li>
+						<li>standing desks</li>
+						<li>oculus rift</li>
+						<li>graphic design</li>
+						<li>indie games</li>
+					</ul>
+					<ul>
+						<li>opengl es</li>
+						<li>html5</li>
+						<li>vim</li>
+						<li>ios</li>
+						<li>c#</li>
+						<li>minimalist running</li>
+						<li>shaders... duh</li>
+						<li>or you know, anything else</li>
+					</ul>
+				</section>
+				<section>
+					<h3>how graphics?</h3>
+					a crash course
+				</section>
+				<section>
+					<h3>frame buffer</h3>
+					the screen is a buffer of 24-bit numbers<br />
+					each pixel consists of three 8-bit values ranging 0-255
+					<table>
+						<tr><td>red</td><td><input type="text" class="rgb r" size="3" maxlength="3" value="0" /></td></tr>
+						<tr><td>green</td><td><input type="text" class="rgb g" size="3" maxlength="3" value="255" /></td></tr>
+						<tr><td>blue</td><td><input type="text" class="rgb b" size="3" maxlength="3" value="255" /></td></tr>
+					</table>
+					<div id="color-swatch" style="background-color: #0ff;">
+					</div>
+				</section>
+				<section>
+					<h3>draw loop</h3>
+					<ol>
+						<li>process input, calculate new state</li>
+						<li>clear screen</li>
+						<li>draw pixels</li>
+						<li>goto 1</li>
+					</ol>
+					<br />
+					<small>...profit?</small>
 				</section>
 				<section>
 					<section>
-						<pre><code data-trim data-src="samples/basic.vs"></code></pre>
+						<h3>immediate mode</h3>
+						sorry, no webgl sample because this doesn't exist any more
+						<pre><code data-trim>
+while (true)
+{     
+	// *snip* - other things like processing window events
+
+	glClearColor(1.0f, 1.0f, 1.0f); // what color?
+	glClear(GL_COLOR_BUFFER_BIT); // clear screen
+
+	glColor3f(0.0f, 0.0f, 1.0f); // what color?
+	glPointSize(10.0f);
+
+	glBegin(GL_POINTS);
+	glVertex3f(0.0f, 0.8f, 0.0f);
+	glVertex3f(-0.8f, -0.8f, 0.0f);
+	glVertex3f(0.8f, -0.8f, 0.0f);
+	glEnd();
+
+	glutSwapBuffers(); // actually display it
+}
+						</code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<img src="presentation/immediate-mode.svg" />
+						<br />
+						<small>profit!</small>
+					</section>
+				</section>
+				<section>
+					<h3>screen-space coordinates</h3>
+					<img src="presentation/screen-space-coords.svg" />
+				</section>
+				<section>
+					<section>
+						<pre><code data-trim data-src="samples/cube.js"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
@@ -52,6 +139,6 @@
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.min.js"></script>
 
-		<script src="index.js"></script>
+		<script src="presentation/index.js"></script>
 	</body>
 </html>

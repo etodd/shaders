@@ -6,6 +6,12 @@
 
 @font-face
 {
+	font-family: 'Bitstream Vera Sans Mono';
+	src: url(VeraMono.ttf);
+}
+
+@font-face
+{
 	font-family: Ubuntu;
 	src: url(Ubuntu-Regular.ttf);
 }
@@ -20,6 +26,11 @@ body
 	font-family: 'Lato', sans-serif;
 	font-size: 1.75em;
 	color: #fff;
+}
+
+::selection
+{
+	background-color: #38a;
 }
 
 /*********************************************
@@ -53,6 +64,7 @@ body
 .reveal pre
 {
 	font-size: 0.75em;
+	font-family: 'Bitstream Vera Sans Mono', monospace;
 }
 
 /*********************************************
@@ -77,4 +89,146 @@ iframe
 {
 	width: 500px;
 	height: 500px;
+}
+
+input
+{
+	background: #101a26;
+	color: #eddac0;
+	border: none;
+	padding: 0.5em;
+	font-size: 1em;
+	font-family: monospace;
+}
+
+.reveal table
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.reveal table td
+{
+	padding: 0.25em;
+}
+
+div#color-swatch
+{
+	width: 100px;
+	height: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*********************************************
+ * SYNTAX HIGHLIGHTING
+ *********************************************/
+
+.reveal pre code
+{
+	display: block;
+	overflow: hidden;
+	max-height: none;
+	padding: 0.5em;
+	background: #101a26;
+	color: #eddac0;
+	word-wrap: inherit;
+}
+
+pre .keyword,
+pre .tag,
+pre .css .class,
+pre .css .id,
+pre .lisp .title,
+pre .nginx .title,
+pre .request,
+pre .status,
+pre .clojure .attribute
+{
+	color: #40c4ff;
+}
+
+pre .number,
+pre .string,
+pre .date
+{
+	color: #ff80ff;
+}
+
+pre .dos .envvar,
+pre .dos .stream,
+pre .variable,
+pre .title,
+pre .apache .sqbracket
+{
+	color: #00ffff;
+}
+
+pre .dos .flow,
+pre .diff .change,
+pre .python .exception,
+pre .python .built_in,
+pre .literal,
+pre .tex .special
+{
+	color: #ff80ff;
+}
+
+pre .diff .chunk,
+pre .subst
+{
+	color: #8f8f8f;
+}
+
+pre .dos .keyword,
+pre .python .decorator,
+pre .haskell .type,
+pre .diff .header,
+pre .ruby .class .parent,
+pre .apache .tag,
+pre .nginx .built_in,
+pre .tex .command,
+pre .prompt
+{
+	color: #efef8f;
+}
+
+pre .diff .deletion,
+pre .tag .value,
+pre .preprocessor,
+pre .built_in,
+pre .sql .aggregate,
+pre .javadoc,
+pre .smalltalk .class,
+pre .smalltalk .localvars,
+pre .smalltalk .array,
+pre .css .rules .value,
+pre .attr_selector,
+pre .pseudo,
+pre .apache .cbracket,
+pre .tex .formula
+{
+	color: #00ffff;
+}
+
+pre .shebang,
+pre .diff .addition,
+pre .comment,
+pre .java .annotation,
+pre .template_comment,
+pre .pi,
+pre .doctype
+{
+	color: #7cfc00;
+}
+
+pre .coffeescript .javascript,
+pre .javascript .xml,
+pre .tex .formula,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .xml .css,
+pre .xml .cdata
+{
+	opacity: 0.5;
 }
