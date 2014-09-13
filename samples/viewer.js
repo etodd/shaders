@@ -28,18 +28,18 @@
 	function checkReady()
 	{
 		readyCount++;
-		if (readyCount == 2 && urlParams.prog)
+		if (readyCount == 2 && urlParams.js)
 		{
 			var script = document.createElement('script');
 			script.type = 'text/javascript';
-			script.src = urlParams.prog;
+			script.src = urlParams.js;
 			document.getElementsByTagName('body')[0].appendChild(script);
 		}
 	}
 
-	if (urlParams.vert)
+	if (urlParams.vs)
 	{
-		ajax(urlParams.vert, function(request)
+		ajax(urlParams.vs, function(request)
 		{
 			var script = document.createElement('script');
 			script.type = 'x-shader/x-vertex';
@@ -52,9 +52,9 @@
 	else
 		checkReady();
 
-	if (urlParams.frag)
+	if (urlParams.ps)
 	{
-		ajax(urlParams.frag, function(request)
+		ajax(urlParams.ps, function(request)
 		{
 			var script = document.createElement('script');
 			script.type = 'x-shader/x-fragment';

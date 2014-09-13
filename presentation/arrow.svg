@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="73.900833"
-   height="64"
+   width="46.188023"
+   height="40"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="arrow.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="-168.35848"
-     inkscape:cy="7.7145581"
+     inkscape:cx="-284.35848"
+     inkscape:cy="7.7145577"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,7 +55,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-159.31149,-228.78098)">
+     transform="translate(-159.31149,-252.78098)">
     <path
        sodipodi:type="star"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -71,7 +71,7 @@
        inkscape:rounded="0"
        inkscape:randomized="0"
        d="m 244.45693,364.78098 -85.14544,-147.47621 170.29086,-1e-5 z"
-       inkscape:transform-center-y="10.666666"
-       transform="matrix(0.43396829,0,0,0.43396829,90.175358,134.4776)" />
+       inkscape:transform-center-y="6.6666697"
+       transform="matrix(0.27123018,0,0,0.27123018,116.10141,193.84137)" />
   </g>
 </svg>

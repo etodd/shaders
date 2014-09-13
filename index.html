@@ -52,9 +52,9 @@
 					</ul>
 					<ul>
 						<li>opengl es</li>
+						<li>python</li>
 						<li>html5</li>
 						<li>vim</li>
-						<li>ios</li>
 						<li>c#</li>
 						<li>minimalist running</li>
 						<li>shaders... duh</li>
@@ -91,7 +91,6 @@
 				<section>
 					<section>
 						<h3>immediate mode</h3>
-						sorry, no webgl sample because this doesn't exist any more
 						<pre><code data-trim>
 while (true)
 {     
@@ -125,13 +124,29 @@ while (true)
 					<img src="presentation/screen-space-coords.svg" />
 				</section>
 				<section>
+					<h3>vbo</h3>
+					<ul>
+						<li>create a vertex buffer (object)</li>
+						<li>fill it with vertices</li>
+						<li>send it to the gpu (one time)</li>
+						<li>now we can render it without re-sending the data every frame</li>
+					</ul>
+				</section>
+				<section>
+					<h3>webgl!</h3>
+				</section>
+				<section>
 					<section>
-						<pre><code data-trim data-src="samples/cube.js"></code></pre>
+						<pre><code data-trim data-src="samples/triangle.js"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
-						<iframe data-src="samples/viewer.html?vert=basic.vs&frag=basic.ps&prog=cube.js"></iframe>
+						<iframe data-src="samples/viewer.html?js=triangle.js"></iframe>
 					</section>
+				</section>
+				<section>
+					<h3>fin</h3>
+					<a href="https://github.com/et1337/shaders">https://github.com/et1337/shaders</a>
 				</section>
 			</div>
 		</div>
