@@ -18,13 +18,12 @@ document.body.appendChild(renderer.domElement);
 
 window.matrix = new THREE.Matrix4();
 
-var i = 0;
+var lastDet = 0;
 function render()
 {
 	requestAnimationFrame(render); // continue the draw loop
+	cloud.matrix.copy(window.matrix);
+	cloud.updateMatrixWorld(true);
 	renderer.render(scene, camera);
-	i++;
-	window.matrix.makeTranslation(i, 0, 0);
-	cloud.applyMatrix(window.matrix);
 }
 render();

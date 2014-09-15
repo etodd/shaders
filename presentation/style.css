@@ -118,7 +118,7 @@ input
 	font-family: 'Bitstream Vera Sans Mono', monospace;
 }
 
-table.matrix matrix
+table.matrix input
 {
 	padding: 0.25em;
 }

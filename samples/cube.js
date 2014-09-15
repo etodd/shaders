@@ -19,8 +19,8 @@ function init()
 	var material = new THREE.ShaderMaterial(
 	{
 		uniforms: uniforms,
-		vertexShader: document.getElementById('vertexShader').textContent,
-		fragmentShader: document.getElementById('fragmentShader').textContent,
+		vertexShader: document.getElementById('vs').textContent,
+		fragmentShader: document.getElementById('ps').textContent,
 	});
 
 	var mesh = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), material);
@@ -28,7 +28,7 @@ function init()
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
-	document.getElementById('container').appendChild(renderer.domElement);
+	document.body.appendChild(renderer.domElement);
 }
 
 function animate()

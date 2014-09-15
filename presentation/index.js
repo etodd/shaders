@@ -39,12 +39,6 @@
 		],
 	});
 
-	Reveal.addEventListener('slidechanged', function(event)
-	{
-		showIframes(event.previousSlide, false);
-		showIframes(event.currentSlide, true);
-	});
-
 	Reveal.addEventListener('ready', function(event)
 	{
 		showIframes(event.currentSlide, true);
@@ -99,6 +93,7 @@
 			}
 		});
 
+		// First matrix slide
 		$('table#matrixa input').on('input', function()
 		{
 			var matrix = [];
@@ -119,11 +114,28 @@
 			result[1].innerHTML = v.y.toString();
 			result[2].innerHTML = v.z.toString();
 			result[3].innerHTML = v.w.toString();
+		});
+
+		// Second matrix slide
+		$('table#matrixb input').on('input', function()
+		{
+			var matrix = [];
+			$('table#matrixb input').each(function(i)
+			{
+				matrix.push(parseFloat($(this).val()));
+			});
+			var m = construct(THREE.Matrix4, matrix);
 
 			var iframe = $('#matrix-sample')[0];
 			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
 			win.matrix = m;
 		});
+	});
+
+	Reveal.addEventListener('slidechanged', function(event)
+	{
+		showIframes(event.previousSlide, false);
+		showIframes(event.currentSlide, true);
 	});
 
 	Reveal.addEventListener('overviewshown', function(event)
