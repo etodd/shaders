@@ -79,7 +79,7 @@
 		$('table.matrix input').keydown(function(event)
 		{
 			// allow backspace, delete, tab, arrow keys, minus sign, period
-			if (event.which != 8 && event.which != 46 && (event.which < 37 || event.which > 40) && event.which != 18 && event.which != 190)
+			if (event.which != 8 && event.which != 46 && (event.which < 37 || event.which > 40) && event.which != 189 && event.which != 190)
 			{
 				if (event.which == 9)
 				{
@@ -127,6 +127,21 @@
 			var m = construct(THREE.Matrix4, matrix);
 
 			var iframe = $('#matrix-sample')[0];
+			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
+			win.matrix = m;
+		});
+
+		// Third matrix slide
+		$('table#matrixc input').on('input', function()
+		{
+			var matrix = [];
+			$('table#matrixc input').each(function(i)
+			{
+				matrix.push(parseFloat($(this).val()));
+			});
+			var m = construct(THREE.Matrix4, matrix);
+
+			var iframe = $('#matrix-sample2')[0];
 			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
 			win.matrix = m;
 		});
