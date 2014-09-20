@@ -63,7 +63,7 @@
 					</ul>
 				</section>
 				<section>
-					<h3>how graphics?</h3>
+					<h3>how do i graphics?</h3>
 					a crash course
 				</section>
 				<section>
@@ -271,13 +271,13 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 				</section>
 				<section>
 					<h3>baby's first vertex shader</h3>
-					<pre><code data-trim class="javascript">
+					<pre><code data-trim class="glsl">
 &lt;script type="x-shader/x-vertex" id="vs"&gt;
-void main()
-{
-	gl_PointSize = 2.0;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);
-}
+	void main()
+	{
+		gl_PointSize = 2.0;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);
+	}
 &lt;/script&gt;
 					</code></pre>
 				</section>
@@ -312,7 +312,96 @@ for (var x = -50; x &lt; 50; x++)
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
-						<iframe data-src="samples/viewer.html?js=plane.js&vs=basic.vs"></iframe>
+						<iframe data-src="samples/viewer.html?js=ocean1.js&vs=basic.vs"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>ocean animation</h3>
+					<ul>
+						<li>shaders are basically stateless</li>
+						<li>pass in the same input, you always get the same output</li>
+						<li>how can we make the output change over time?</li>
+					</ul>
+				</section>
+				<section>
+					<h3>uniforms</h3>
+					<ul>
+						<li>so named because they do not change from vertex to vertex</li>
+						<li>we will pass one float (time) from Javascript into the shader</li>
+						<li>every vertex will have access to this value</li>
+					</ul>
+				</section>
+				<section>
+					<pre><code data-trim class="javascript">
+var uniforms =
+{
+	time: { type: 'f', value: 0 }, // f for float
+};
+
+var material = new THREE.ShaderMaterial(
+{
+	vertexShader: document.getElementById('vs').textContent,
+	color: 0xff0000,
+	uniforms: uniforms,
+});
+
+// snip...
+var clock = new THREE.Clock();
+function render()
+{
+	requestAnimationFrame(render);
+	uniforms.time.value = clock.getElapsedTime();
+	renderer.render(scene, camera);
+}
+render();
+					</code></pre>
+				</section>
+				<section>
+					<section>
+						<h3>and the vertex shader</h3>
+						<pre><code data-trim data-src="samples/ocean2.vs" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=ocean2.js&vs=ocean2.vs"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>attributes</h3>
+					<p>data attached to each vertex</p>
+					<pre><code data-trim class="javascript">
+var attributes =
+{
+	offset: { type: 'f', value: [] },
+};
+
+var geometry = new THREE.Geometry();
+for (var x = -50; x &lt; 50; x++)
+{
+	for (var z = -50; z &lt; 50; z++)
+	{
+		geometry.vertices.push(new THREE.Vector3(x, 0, z));
+		attributes.offset.value.push((x + z) * 0.1);
+	}
+}
+
+var material = new THREE.ShaderMaterial(
+{
+	vertexShader: document.getElementById('vs').textContent,
+	color: 0xff0000,
+	uniforms: uniforms,
+	attributes: attributes,
+});
+					</code></pre>
+				</section>
+				<section>
+					<section>
+						<h3>and the vertex shader</h3>
+						<pre><code data-trim data-src="samples/ocean3.vs" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=ocean3.js&vs=ocean3.vs"></iframe>
 					</section>
 				</section>
 				<section>

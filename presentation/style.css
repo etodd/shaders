@@ -144,6 +144,9 @@ div#color-swatch
 	background: #101a26;
 	color: #eddac0;
 	word-wrap: inherit;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
 }
 
 pre .keyword,

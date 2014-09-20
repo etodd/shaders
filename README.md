@@ -10,9 +10,6 @@ python -m SimpleHTTPServer
 
 ## Todo
 
-* Hello World vertex shader
-* Uniforms
-* Vertex declarations
 * Rasterization
 * Normals
 * Lambert shading

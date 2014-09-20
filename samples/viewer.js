@@ -66,7 +66,7 @@
 		document.body.removeChild(canvas);
 		
 		var newThreejs = document.createElement('script');
-		newThreejs.src = '//cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js';
+		newThreejs.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js';
 		document.head.appendChild(newThreejs);
 
 		var html = document.documentElement.outerHTML;
