@@ -88,7 +88,7 @@
 				</section>
 				<section>
 					<section>
-						<pre><code data-trim>
+						<pre><code data-trim class="javascript">
 while (true)
 {     
 	// *snip* - other things like processing window events
@@ -123,7 +123,7 @@ while (true)
 				</section>
 				<section>
 					<section>
-						<pre><code data-trim data-src="samples/triangle.js"></code></pre>
+						<pre><code data-trim data-src="samples/triangle.js" class="javascript"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
@@ -205,33 +205,115 @@ while (true)
 					<iframe id="matrix-sample" data-src="samples/viewer.html?js=matrix.js"></iframe>
 				</section>
 				<section>
-					<table id="matrixc" class="matrix">
-						<tr>
-							<td><input type="text" size="3" value="1" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-						</tr>
-						<tr>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="1" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-						</tr>
-						<tr>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="1" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-						</tr>
-						<tr>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="0" /></td>
-							<td><input type="text" size="3" value="1" /></td>
-						</tr>
-					</table>
-					<iframe id="matrix-sample2" data-src="samples/viewer.html?js=perspective.js"></iframe>
+					<section>
+						<h3>perspective</h3>
+						<pre><code data-trim class="javascript">
+var camera = new THREE.PerspectiveCamera
+(
+	45, // field of view (degrees)
+	window.innerWidth / window.innerHeight, // aspect ratio
+	1, // near plane
+	1000 // far plane
+);
+camera.position.z = 500;
+
+var geometry = new THREE.Geometry();
+
+// cube!
+geometry.vertices.push(new THREE.Vector3(-80, -80, -80));
+geometry.vertices.push(new THREE.Vector3(-80, 80, -80));
+geometry.vertices.push(new THREE.Vector3(80, -80, -80));
+geometry.vertices.push(new THREE.Vector3(80, 80, -80));
+geometry.vertices.push(new THREE.Vector3(-80, -80, 80));
+geometry.vertices.push(new THREE.Vector3(-80, 80, 80));
+geometry.vertices.push(new THREE.Vector3(80, -80, 80));
+geometry.vertices.push(new THREE.Vector3(80, 80, 80));
+						</code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<table id="matrixc" class="matrix">
+							<tr>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="0" /></td>
+								<td><input type="text" size="3" value="1" /></td>
+							</tr>
+						</table>
+						<iframe id="matrix-sample2" data-src="samples/viewer.html?js=perspective.js"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>what if we want to do something more complicated?</h3>
+					<ul>
+						<li>so far we have been using the "fixed function pipeline"</li>
+						<li>the gpu can only do matrix multiplication</li>
+						<li>if we want to move individual vertices, we have to update the vbo</li>
+					</ul>
+				</section>
+				<section>
+					<h3>baby's first vertex shader</h3>
+					<pre><code data-trim class="javascript">
+&lt;script type="x-shader/x-vertex" id="vs"&gt;
+void main()
+{
+	gl_PointSize = 2.0;
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);
+}
+&lt;/script&gt;
+					</code></pre>
+				</section>
+				<section>
+					<section>
+						<h3>three.js setup</h3>
+						<pre><code data-trim class="javascript">
+var material = new THREE.ShaderMaterial(
+{
+	vertexShader: document.getElementById('vs').textContent,
+	color: 0xff0000,
+});
+						</code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=vs.js&vs=basic.vs"></iframe>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>let's make an ocean</h3>
+						<p>start with a flat plane</p>
+						<pre><code data-trim class="javascript">
+var geometry = new THREE.Geometry();
+for (var x = -50; x &lt; 50; x++)
+{
+	for (var z = -50; z &lt; 50; z++)
+		geometry.vertices.push(new THREE.Vector3(x, 0, z));
+}
+						</code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=plane.js&vs=basic.vs"></iframe>
+					</section>
 				</section>
 				<section>
 					<h3>fin</h3>

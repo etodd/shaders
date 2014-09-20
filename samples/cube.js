@@ -16,15 +16,28 @@ function init()
 	{
 	};
 
+	var geometry = new THREE.Geometry(); // proxy for a vbo
+	geometry.vertices.push(new THREE.Vector3(-80, -80, -80));
+	geometry.vertices.push(new THREE.Vector3(-80, 80, -80));
+	geometry.vertices.push(new THREE.Vector3(80, -80, -80));
+	geometry.vertices.push(new THREE.Vector3(80, 80, -80));
+	geometry.vertices.push(new THREE.Vector3(-80, -80, 80));
+	geometry.vertices.push(new THREE.Vector3(-80, 80, 80));
+	geometry.vertices.push(new THREE.Vector3(80, -80, 80));
+	geometry.vertices.push(new THREE.Vector3(80, 80, 80));
+
 	var material = new THREE.ShaderMaterial(
 	{
 		uniforms: uniforms,
 		vertexShader: document.getElementById('vs').textContent,
 		fragmentShader: document.getElementById('ps').textContent,
+		size: 10,
+		color: 0xff0000,
+		sizeAttenuation: false,
 	});
 
-	var mesh = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), material);
-	scene.add(mesh);
+	var cloud = new THREE.PointCloud(geometry, material);
+	scene.add(cloud);
 
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);

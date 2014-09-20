@@ -10,15 +10,13 @@ python -m SimpleHTTPServer
 
 ## Todo
 
-* Perspective camera matrix
-* Rasterization
 * Hello World vertex shader
 * Uniforms
 * Vertex declarations
+* Rasterization
 * Normals
 * Lambert shading
 * Hello world pixel shader
-* Varyings
 * Texture mapping
 * Post-processing
 * Deferred rendering
