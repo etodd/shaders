@@ -204,8 +204,16 @@ while (true)
 					<iframe id="matrix-sample" data-src="samples/viewer.html?js=matrix.js"></iframe>
 				</section>
 				<section>
+					<h3>matrix hierarchy</h3>
+					<ul>
+						<li>you can multiply matrices together to combine them</li>
+						<li>view matrix: applies the camera position and rotation</li>
+						<li>projection matrix: converts a 3d vector to a 2d screen-space coordinate</li>
+					</ul>
+				</section>
+				<section>
 					<section>
-						<h3>perspective</h3>
+						<h3>perspective projection</h3>
 						<pre><code data-trim class="javascript">
 var camera = new THREE.PerspectiveCamera
 (
@@ -292,7 +300,7 @@ var material = new THREE.ShaderMaterial(
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
-						<iframe data-src="samples/viewer.html?js=vs.js&vs=basic.vs"></iframe>
+						<iframe data-src="samples/viewer.html?js=vs.js&vs=basic.vs&ps=basic.ps"></iframe>
 					</section>
 				</section>
 				<section>
@@ -401,7 +409,21 @@ var material = new THREE.ShaderMaterial(
 					</section>
 				</section>
 				<section>
-					<iframe data-src="samples/viewer.html?js=normals.js&vs=normals.vs"></iframe>
+					<h3>the most common vertex attribute</h3>
+					<iframe data-src="samples/viewer.html?js=normals1.js&vs=basic.vs"></iframe>
+				</section>
+				<section>
+					<h3>normals</h3>
+					<iframe data-src="samples/viewer.html?js=normals2.js&vs=basic.vs"></iframe>
+				</section>
+				<section>
+					<section>
+						<pre><code data-trim data-src="samples/normals.vs" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=normals3.js&vs=normals.vs"></iframe>
+					</section>
 				</section>
 				<section>
 					<h3>fin</h3>

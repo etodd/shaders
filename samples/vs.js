@@ -16,7 +16,6 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 var material = new THREE.ShaderMaterial(
 {
 	vertexShader: document.getElementById('vs').textContent,
-	color: 0xffffff,
 });
 
 var cloud = new THREE.PointCloud(geometry, material);

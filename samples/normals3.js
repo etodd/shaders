@@ -19,12 +19,10 @@ loader.load('bunny.js', function(geometry)
 	var material = new THREE.ShaderMaterial(
 	{
 		vertexShader: document.getElementById('vs').textContent,
-		color: 0xff0000,
 		uniforms: uniforms,
 	});
 
-	var cloud = new THREE.PointCloud(geometry, material);
-	cloud.add(new THREE.VertexNormalsHelper(cloud));
+	var cloud = new THREE.Mesh(geometry, material);
 	scene.add(cloud);
 
 	var renderer = new THREE.WebGLRenderer();
