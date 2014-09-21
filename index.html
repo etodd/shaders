@@ -80,7 +80,7 @@
 				</section>
 				<section>
 					<h3>screen-space coordinates</h3>
-					<img src="presentation/screen-space-coords.svg" />
+					<img class="border" src="presentation/screen-space-coords.svg" />
 				</section>
 				<section>
 					<h3>immediate mode draw loop</h3>
@@ -93,7 +93,6 @@ while (true)
 {     
 	// *snip* - other things like processing window events
 
-	glClearColor(1.0f, 1.0f, 1.0f); // what color?
 	glClear(GL_COLOR_BUFFER_BIT); // clear screen
 
 	glColor3f(0.0f, 0.0f, 1.0f); // what color?
@@ -111,7 +110,7 @@ while (true)
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
-						<img src="presentation/immediate-mode.svg" />
+						<img class="border" src="presentation/immediate-mode.svg" />
 					</section>
 				</section>
 				<section>
@@ -288,7 +287,6 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 var material = new THREE.ShaderMaterial(
 {
 	vertexShader: document.getElementById('vs').textContent,
-	color: 0xff0000,
 });
 						</code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
@@ -341,7 +339,6 @@ var uniforms =
 var material = new THREE.ShaderMaterial(
 {
 	vertexShader: document.getElementById('vs').textContent,
-	color: 0xff0000,
 	uniforms: uniforms,
 });
 
@@ -388,7 +385,6 @@ for (var x = -50; x &lt; 50; x++)
 var material = new THREE.ShaderMaterial(
 {
 	vertexShader: document.getElementById('vs').textContent,
-	color: 0xff0000,
 	uniforms: uniforms,
 	attributes: attributes,
 });
@@ -403,6 +399,9 @@ var material = new THREE.ShaderMaterial(
 					<section>
 						<iframe data-src="samples/viewer.html?js=ocean3.js&vs=ocean3.vs"></iframe>
 					</section>
+				</section>
+				<section>
+					<iframe data-src="samples/viewer.html?js=normals.js&vs=normals.vs"></iframe>
 				</section>
 				<section>
 					<h3>fin</h3>

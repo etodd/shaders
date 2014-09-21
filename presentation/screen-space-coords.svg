@@ -61,7 +61,7 @@
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1916"
-     inkscape:window-height="968"
+     inkscape:window-height="1033"
      inkscape:window-x="0"
      inkscape:window-y="22"
      inkscape:window-maximized="0" />
@@ -144,12 +144,5 @@
        width="500"
        height="500"
        style="fill:#ffffff;fill-opacity:1" />
-    <rect
-       style="fill:none;stroke:#ffffff;stroke-width:4;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       id="rect3784"
-       width="496.46954"
-       height="496.46954"
-       x="1.7652295"
-       y="554.12744" />
   </g>
 </svg>

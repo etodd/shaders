@@ -91,6 +91,11 @@ iframe
 	height: 500px;
 }
 
+img.border, iframe
+{
+	border: 1px solid #fff !important;
+}
+
 input
 {
 	background: #101a26;

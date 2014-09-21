@@ -27,7 +27,6 @@ var uniforms =
 var material = new THREE.ShaderMaterial(
 {
 	vertexShader: document.getElementById('vs').textContent,
-	color: 0xff0000,
 	uniforms: uniforms,
 	attributes: attributes,
 });
@@ -36,7 +35,6 @@ var cloud = new THREE.PointCloud(geometry, material);
 scene.add(cloud);
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xffffff, 1);
 renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
 document.body.appendChild(renderer.domElement);
 

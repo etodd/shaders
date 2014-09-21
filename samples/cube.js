@@ -32,7 +32,6 @@ function init()
 		vertexShader: document.getElementById('vs').textContent,
 		fragmentShader: document.getElementById('ps').textContent,
 		size: 10,
-		color: 0xff0000,
 		sizeAttenuation: false,
 	});
 

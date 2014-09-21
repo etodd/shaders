@@ -12,13 +12,12 @@ geometry.vertices.push(new THREE.Vector3(80, -80, 80));
 geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 
 var scene = new THREE.Scene();
-var mat = new THREE.PointCloudMaterial({ size: 10, color: 0xff0000, sizeAttenuation: false });
+var mat = new THREE.PointCloudMaterial({ size: 10, sizeAttenuation: false, color: 0xffffff });
 var cloud = new THREE.PointCloud(geometry, mat);
 cloud.matrixAutoUpdate = false;
 scene.add(cloud);
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xffffff, 1);
 renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
 document.body.appendChild(renderer.domElement);
 
