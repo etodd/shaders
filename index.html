@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>shaders - how do they work?</title>
+		<title>shaders: how do they work?</title>
 
 		<meta name="description" content="a high-level introduction to vertex and fragment shaders via concrete webgl examples">
 		<meta name="author" content="Evan Todd">
@@ -65,8 +65,11 @@
 					</ul>
 				</section>
 				<section>
-					<h3>how do i graphics?</h3>
-					from the ground up
+					<h3>what we want to learn</h3>
+					<ul>
+						<li><b>no:</b> how to write a shader that does x</li>
+						<li><b>yes:</b> underlying concepts</li>
+					</ul>
 				</section>
 				<section>
 					<h3>frame buffer</h3>
@@ -87,10 +90,16 @@
 				<section>
 					<h3>immediate mode draw loop</h3>
 					<img src="presentation/draw-loop.svg" />
+					<aside class="notes">
+						<ul>
+							<li>immediate mode is the easiest way to get something on the screen</li>
+							<li>we can send vertices with rgb colors and screen-space coordinates directly to the gpu</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<section>
-						<pre><code data-trim class="javascript">
+						<pre><code data-trim class="c">
 while (true)
 {     
 	// *snip* - other things like processing window events
@@ -118,6 +127,14 @@ while (true)
 				<section>
 					<h3>vbo draw loop</h3>
 					<img src="presentation/vbo-draw-loop.svg" />
+					<aside class="notes">
+						<ul>
+							<li>vbo stands for "vertex buffer object"</li>
+							<li>vertices are stored on the gpu</li>
+							<li>much faster because we don't have to send the vertices every single frame</li>
+							<li>the draw command just points to the existing vbo</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<h3>webgl!</h3>
@@ -126,6 +143,13 @@ while (true)
 					<section>
 						<pre><code data-trim data-src="samples/triangle.js" class="javascript"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+						<aside class="notes">
+							<ul>
+								<li>this code uses three.js, higher-level than we need</li>
+								<li>but that's the entirety of the code</li>
+								<li>most of it just disables nice things three.js does for you</li>
+							</ul>
+						</aside>
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=triangle.js"></iframe>
@@ -175,6 +199,14 @@ while (true)
 							<td class="result">1</td>
 						</tr>
 					</table>
+					<aside class="notes">
+						<ul>
+							<li>matrices are how we transform vertices</li>
+							<li>the vertex has 4 dimensions because translation is actually a 4-dimensional skew</li>
+							<li>the fourth number is always 1 to start</li>
+							<li>take a linear algebra class</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<table id="matrixb" class="matrix">
@@ -203,14 +235,24 @@ while (true)
 							<td><input type="text" size="3" value="1" /></td>
 						</tr>
 					</table>
+					<aside class="notes">
+						<ul>
+							<li>we apply the matrix separately to each vertex</li>
+							<li>this simulates moving, rotating, scaling, and skewing the whole model</li>
+							<li>the math details are not important, the important part is: matrix = transform vertices</li>
+							<li>why doesn't this look 3d?</li>
+							<li>the graphics card ignores the last two dimensions of a vertex when displaying it to the screen</li>
+						</ul>
+					</aside>
 					<iframe id="matrix-sample" data-src="samples/viewer.html?js=matrix.js"></iframe>
 				</section>
 				<section>
-					<h3>matrix hierarchy</h3>
+					<h3>combining matrices</h3>
 					<ul>
 						<li>you can multiply matrices together to combine them</li>
-						<li>view matrix: applies the camera position and rotation</li>
-						<li>projection matrix: converts a 3d vector to a 2d screen-space coordinate</li>
+						<li>model matrix: move the vertices in world space</li>
+						<li>view matrix: apply camera position and rotation</li>
+						<li>projection matrix: convert the 3d vector to a 2d screen-space coordinate</li>
 					</ul>
 				</section>
 				<section>
@@ -296,7 +338,7 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 				</section>
 				<section>
 					<section>
-						<h3>three.js setup</h3>
+						<h3>three.js is crazy easy</h3>
 						<pre><code data-trim class="javascript">
 var material = new THREE.ShaderMaterial(
 {
@@ -339,11 +381,12 @@ for (var x = -50; x &lt; 50; x++)
 					<h3>uniforms</h3>
 					<ul>
 						<li>so named because they do not change from vertex to vertex</li>
-						<li>we will pass one float (time) from Javascript into the shader</li>
+						<li>we will pass one float into the shader each frame, representing time</li>
 						<li>every vertex will have access to this value</li>
 					</ul>
 				</section>
 				<section>
+					<h3>three.js is so great</h3>
 					<pre><code data-trim class="javascript">
 var uniforms =
 {
@@ -378,8 +421,26 @@ render();
 					</section>
 				</section>
 				<section>
-					<h3>attributes</h3>
-					<p>data attached to each vertex</p>
+					<h3>how can we make each vertex behave differently?</h3>
+					<ul>
+						<li>why can't we keep track of anything between vertices?</li>
+						<li>gpu actually processes many vertices simultaneously</li>
+					</ul>
+				</section>
+				<section>
+					<h3>attributes to the rescue</h3>
+					<p><b>vertex declaration</b> specifies what data is attached to each vertex</p>
+					<table>
+						<tr><td>position</td><td>float3</td></tr>
+						<tr><td>normal</td><td>float3</td></tr>
+						<tr><td>texture coordinate</td><td>float2</td></tr>
+						<tr><td>blend weights</td><td>float4</td></tr>
+						<tr><td>instance transform</td><td>float4</td></tr>
+						<tr><td>flux compression</td><td>float</td></tr>
+					</table>
+				</section>
+				<section>
+					<h3>three.js saves lives</h3>
 					<pre><code data-trim class="javascript">
 var attributes =
 {
@@ -434,6 +495,7 @@ var material = new THREE.ShaderMaterial(
 					<h3>normals</h3>
 					<p>usually precalculated at design-time or during loading</p>
 					<iframe data-src="samples/viewer.html?js=normals2.js&vs=basic.vs"></iframe>
+					<p>of course three.js can do it for you, and even display them for debugging</p>
 				</section>
 				<section>
 					<section>
@@ -448,14 +510,21 @@ var material = new THREE.ShaderMaterial(
 					<h3>rasterization</h3>
 					<p>automatically handled by the gpu</p>
 					<img src="presentation/rasterization.svg" />
-					<p>let's run a program for each one of these pixels</p>
+					<p>let's execute 512 instructions for each one of these bazillion pixels, no big deal</p>
 				</section>
 				<section>
 					<h3>fragment shader</h3>
 					<ul>
 						<li>take inputs, do math, output the pixel color</li>
-						<li>output is four floats (rgba)</li>
+						<li>output is four floats (rgba) ranging from 0 to 1</li>
 					</ul>
+					<aside class="notes">
+						<ul>
+							<li>fragment shaders are stateless like vertex shaders</li>
+							<li>where do the inputs come from? stay tuned</li>
+							<li>what does the 'a' stand for?</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<section>

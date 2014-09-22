@@ -72,7 +72,7 @@ body
  *********************************************/
 .reveal .progress
 {
-	background: rgba(0, 0, 0, 0.2);
+	background: #f00;
 }
 
 .reveal .progress span
