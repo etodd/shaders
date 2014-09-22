@@ -7,7 +7,7 @@ loader.load('bunny.js', function(geometry)
 	geometry.computeVertexNormals();
 
 	var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-	camera.position.z = 25;
+	camera.position.z = 20;
 
 	var scene = new THREE.Scene();
 

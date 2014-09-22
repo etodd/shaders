@@ -10,10 +10,7 @@ python -m SimpleHTTPServer
 
 ## Todo
 
-* Rasterization
-* Normals
-* Lambert shading
-* Hello world pixel shader
+* Phong shading
 * Texture mapping
 * Post-processing
 * Deferred rendering

@@ -14,10 +14,11 @@ loader.load('bunny.js', function(geometry)
 	var material = new THREE.ShaderMaterial(
 	{
 		vertexShader: document.getElementById('vs').textContent,
+		fragmentShader: document.getElementById('ps').textContent,
 	});
 
-	var bunny = new THREE.PointCloud(geometry, material);
-	scene.add(bunny);
+	var cloud = new THREE.Mesh(geometry, material);
+	scene.add(cloud);
 
 	var renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
@@ -28,7 +29,7 @@ loader.load('bunny.js', function(geometry)
 	function render()
 	{
 		requestAnimationFrame(render);
-		bunny.rotation.y = clock.getElapsedTime();
+		cloud.rotation.y = clock.getElapsedTime();
 		renderer.render(scene, camera);
 	}
 	render();

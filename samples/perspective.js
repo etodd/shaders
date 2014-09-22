@@ -12,7 +12,7 @@ geometry.vertices.push(new THREE.Vector3(80, -80, 80));
 geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 
 var scene = new THREE.Scene();
-var mat = new THREE.PointCloudMaterial({ size: 10, sizeAttenuation: false, color: 0xffffff });
+var mat = new THREE.PointCloudMaterial({ size: 10, sizeAttenuation: false, });
 var cloud = new THREE.PointCloud(geometry, mat);
 cloud.matrixAutoUpdate = false;
 scene.add(cloud);
@@ -23,7 +23,6 @@ document.body.appendChild(renderer.domElement);
 
 window.matrix = new THREE.Matrix4();
 
-var lastDet = 0;
 function render()
 {
 	requestAnimationFrame(render);

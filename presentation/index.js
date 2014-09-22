@@ -145,6 +145,36 @@
 			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
 			win.matrix = m;
 		});
+
+		// Index buffer slide
+		$('input#indices').on('input', function()
+		{
+			var valid = true;
+			var iframe = $('#index-buffer-sample')[0];
+			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
+			try
+			{
+				var indices = JSON.parse($(this).val());
+				if (indices instanceof Array)
+				{
+					for (var i = 0; i < indices.length; i++)
+					{
+						if (indices[i] != parseInt(indices[i]) || indices[i] < 0 || indices[i] >= 8)
+						{
+							valid = false;
+							break;
+						}
+					}
+					if (valid)
+						win.indices = indices;
+				}
+			}
+			catch (e)
+			{
+				valid = false;
+			}
+			$(this).attr('class', valid ? '' : 'invalid');
+		});
 	});
 
 	Reveal.addEventListener('slidechanged', function(event)

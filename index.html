@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Shaders - How Do They Work?</title>
+		<title>shaders - how do they work?</title>
 
-		<meta name="description" content="A high-level introduction to vertex and fragment shaders via concrete WebGL examples.">
+		<meta name="description" content="a high-level introduction to vertex and fragment shaders via concrete webgl examples">
 		<meta name="author" content="Evan Todd">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 						<li>oculus rift</li>
 						<li>graphic design</li>
 						<li>indie games</li>
+						<li>art in general</li>
 					</ul>
 					<ul>
 						<li>opengl es</li>
@@ -58,13 +59,14 @@
 						<li>vim</li>
 						<li>c#</li>
 						<li>minimalist running</li>
+						<li>weird music</li>
 						<li>shaders... duh</li>
 						<li>or you know, anything else</li>
 					</ul>
 				</section>
 				<section>
 					<h3>how do i graphics?</h3>
-					a crash course
+					from the ground up
 				</section>
 				<section>
 					<h3>frame buffer</h3>
@@ -277,6 +279,10 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 					</ul>
 				</section>
 				<section>
+					<h3>vertex shaders to the rescue</h3>
+					<p>take input vertex data, do math, output vertex data</p>
+				</section>
+				<section>
 					<h3>baby's first vertex shader</h3>
 					<pre><code data-trim class="glsl">
 &lt;script type="x-shader/x-vertex" id="vs"&gt;
@@ -409,11 +415,24 @@ var material = new THREE.ShaderMaterial(
 					</section>
 				</section>
 				<section>
+					<h3>connecting the dots</h3>
+					<ul>
+						<li>everything is made of triangles</li>
+						<li>a triangle is basically three integers which point to vertices in the vbo</li>
+					</ul>
+				</section>
+				<section>
+					<h3>index buffer</h3>
+					<input type="text" id="indices" value="[0, 1, 2]"/>
+					<iframe data-src="samples/viewer.html?js=indices.js" id="index-buffer-sample"></iframe>
+				</section>
+				<section>
 					<h3>the most common vertex attribute</h3>
 					<iframe data-src="samples/viewer.html?js=normals1.js&vs=basic.vs"></iframe>
 				</section>
 				<section>
 					<h3>normals</h3>
+					<p>usually precalculated at design-time or during loading</p>
 					<iframe data-src="samples/viewer.html?js=normals2.js&vs=basic.vs"></iframe>
 				</section>
 				<section>
@@ -423,6 +442,29 @@ var material = new THREE.ShaderMaterial(
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=normals3.js&vs=normals.vs"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>rasterization</h3>
+					<p>automatically handled by the gpu</p>
+					<img src="presentation/rasterization.svg" />
+					<p>let's run a program for each one of these pixels</p>
+				</section>
+				<section>
+					<h3>fragment shader</h3>
+					<ul>
+						<li>take inputs, do math, output the pixel color</li>
+						<li>output is four floats (rgba)</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h3>baby's first fragment shader</h3>
+						<pre><code data-trim data-src="samples/basic.ps" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=vsps.js&vs=basic.vs&ps=basic.ps"></iframe>
 					</section>
 				</section>
 				<section>
