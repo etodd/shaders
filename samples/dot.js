@@ -56,7 +56,7 @@ document.body.addEventListener('mousemove', function(event)
 	}
 	else
 	{
-		cameraX += diffX;
+		cameraX += diffY;
 		camera.position.x = Math.sin(cameraX) * 5;
 		camera.position.z = Math.cos(cameraX) * 5;
 		camera.lookAt(new THREE.Vector3(0, 0, 0));
