@@ -11,10 +11,16 @@ loader.load('bunny.js', function(geometry)
 
 	var scene = new THREE.Scene();
 
+	var uniforms =
+	{
+        texture1: { type: 't', value: 0, texture: THREE.ImageUtils.loadTexture('texture.jpg') },
+    };
+
 	var material = new THREE.ShaderMaterial(
 	{
 		vertexShader: document.getElementById('vs').textContent,
 		fragmentShader: document.getElementById('ps').textContent,
+		uniforms: uniforms,
 	});
 
 	var cloud = new THREE.Mesh(geometry, material);

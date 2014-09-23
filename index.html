@@ -580,6 +580,11 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=varying.js&vs=varying.vs&ps=varying.ps"></iframe>
+						<aside class="notes">
+							<ul>
+								<li>the gpu automatically blends data from each vertex</li>
+							</ul>
+						</aside>
 					</section>
 				</section>
 				<section>
@@ -618,6 +623,41 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=lighting.js&vs=varying-normals.vs&ps=lighting.ps"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>texture mapping</h3>
+					<ul>
+						<li>each vertex has a 2d texture coordinate as an attribute</li>
+						<li>we pass the coordinate to the fragment shader</li>
+						<li>the gpu automagically interpolates to get the coordinate for each pixel</li>
+						<li>fragment shader samples the texture at that coordinate to get final color</li>
+					</ul>
+				</section>
+				<section>
+					<pre><code data-trim class="javascript">
+geometry.faceVertexUvs[0] = [];
+geometry.faceVertexUvs[0].push(
+[
+	new THREE.Vector2(1, 0),
+	new THREE.Vector2(0.5, 1),
+	new THREE.Vector2(0, 0),
+]);
+
+var uniforms =
+{
+	texture1: { type: 't', value: THREE.ImageUtils.loadTexture('texture.jpg') },
+};
+					</code></pre>
+				</section>
+				<section>
+					<section>
+						<pre><code data-trim data-src="samples/texture.vs" class="glsl"></code></pre>
+						<pre><code data-trim data-src="samples/texture.ps" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=texture.js&vs=texture.vs&ps=texture.ps"></iframe>
 					</section>
 				</section>
 				<section>

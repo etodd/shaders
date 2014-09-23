@@ -12,7 +12,6 @@ python -m SimpleHTTPServer
 
 * Texture mapping
 * Post-processing
-* Deferred rendering
 
 ## License
 
