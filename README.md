@@ -10,7 +10,6 @@ python -m SimpleHTTPServer
 
 ## Todo
 
-* Phong shading
 * Texture mapping
 * Post-processing
 * Deferred rendering

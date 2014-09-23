@@ -1,0 +1,8 @@
+uniform vec3 lightDirection;
+varying vec3 varyingNormal;
+
+void main()
+{
+	float lighting = dot(varyingNormal, lightDirection);
+	gl_FragColor = vec4(lighting, lighting, lighting, 1.0);
+}
