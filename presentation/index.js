@@ -175,6 +175,22 @@
 			}
 			$(this).attr('class', valid ? '' : 'invalid');
 		});
+
+		// Texture mapping slide
+		$('table#uvs input').on('input', function()
+		{
+			var uvs = [];
+			$('table#uvs input').each(function(i)
+			{
+				uvs.push(parseFloat($(this).val()));
+			});
+
+			var iframe = $('#uv-sample')[0];
+			var win = iframe.contentWindow || iframe.contentDocument.defaultView; 
+			win.uvs[0] = new THREE.Vector2(uvs[0], uvs[1]);
+			win.uvs[1] = new THREE.Vector2(uvs[2], uvs[3]);
+			win.uvs[2] = new THREE.Vector2(uvs[4], uvs[5]);
+		});
 	});
 
 	Reveal.addEventListener('slidechanged', function(event)

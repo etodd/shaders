@@ -5,7 +5,6 @@ var label = document.createElement('span');
 label.style.position = 'absolute';
 label.style.zIndex = 1;
 label.style.backgroundColor = '#000';
-label.innerHTML = 'hi there!';
 label.style.top = 16 + 'px';
 label.style.right = 16 + 'px';
 document.body.appendChild(label);
@@ -48,8 +47,8 @@ var cameraX = 0;
 document.body.addEventListener('mousemove', function(event)
 {
 	var diffX, diffY;
-	diffX = (event.clientX - lastMouseX) * 3 * 3.1415 / 500.0;
-	diffY = (event.clientY - lastMouseY) * 3 * 3.1415 / 500.0;
+	diffX = (event.clientY - lastMouseY) * 3 * 3.1415 / 500.0;
+	diffY = (event.clientX - lastMouseX) * -3 * 3.1415 / 500.0;
 	if (mouseDown)
 	{
 		line2.rotation.x += diffX;

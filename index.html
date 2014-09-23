@@ -203,7 +203,7 @@ while (true)
 						<ul>
 							<li>matrices are how we transform vertices</li>
 							<li>the vertex has 4 dimensions because translation is actually a 4-dimensional skew</li>
-							<li>the fourth number is always 1 to start</li>
+							<li>the fourth number has to be 1 for translation to work properly</li>
 							<li>take a linear algebra class</li>
 						</ul>
 					</aside>
@@ -322,7 +322,7 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 				</section>
 				<section>
 					<h3>vertex shaders to the rescue</h3>
-					<p>take input vertex data, do math, output vertex data</p>
+					<p>input vertices, do math, output vertices</p>
 				</section>
 				<section>
 					<h3>baby's first vertex shader</h3>
@@ -335,10 +335,27 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 	}
 &lt;/script&gt;
 					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>we have to convert the 3d position to a 4d vector with 1 for the fourth dimension</li>
+							<li>why? to make translation work properly</li>
+							<li>gl_PointSize sets the point size</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>things you should know about shaders</h3>
+					<ul>
+						<li>they are plain text</li>
+						<li>often included directly in binaries as char arrays</li>
+						<li>opengl compiles them at runtime</li>
+						<li>written in glsl (opengl shader language)</li>
+						<li>syntax is similar to c</li>
+					</ul>
 				</section>
 				<section>
 					<section>
-						<h3>three.js is crazy easy</h3>
+						<h3>three.js makes it crazy easy</h3>
 						<pre><code data-trim class="javascript">
 var material = new THREE.ShaderMaterial(
 {
@@ -352,9 +369,86 @@ var material = new THREE.ShaderMaterial(
 					</section>
 				</section>
 				<section>
+					<h3>glsl data types</h3>
+					<p>first, the usual suspects</p>
+					<ul>
+						<li>bool</li>
+						<li>int</li>
+						<li>uint</li>
+						<li>float</li>
+						<li>double</li>
+					</ul>
+					<p>they work as expected</p>
+					<aside class="notes">
+						<ul>
+							<li>single values like this are called "scalars"</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>vector types</h3>
+					<ul>
+						<li>bvec2, bvec3, bvec4</li>
+						<li>ivec2, ivec3, ivec4</li>
+						<li>uvec2, uvec3, uvec4</li>
+						<li>vec2, vec3, vec4</li>
+						<li>dvec2, dvec3, dvec4</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>most likely you're only going to need vec2, vec3, and vec4</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>matrices</h3>
+					<ul>
+						<li>matnxn | 2 &lt;= n &lt;= 4</li>
+						<li>matn | 2 &lt;= n &lt;= 4</li>
+						<li>you can multiply matrices together</li>
+					</ul>
+					<pre><code data-trim class="glsl">
+mat4x4 world;
+mat4x4 view;
+mat4x4 projection;
+mat4x4 final = world * view * projection;
+					</pre></code>
+					<p>you can also multiply vectors with them if they are the right size</p>
+					<pre><code data-trim class="glsl">
+mat4x4 world;
+vec3 position;
+position = world * position; // ERROR
+position = world * vec4(position, 1); // okay
+					</pre></code>
+					<aside class="notes">
+						<ul>
+							<li>can only multiply a vec4 by a mat4x4</li>
+							<li>can only multiply a vec3 by a mat3x3 or mat4x3</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h3>swizzling</h3>
+					<p>you can access individual components of vectors</p>
+					<pre><code data-trim class="glsl">
+vec3 position;
+float height = position.y;
+					</pre></code>
+					<p>access multiple components simultaneously</p>
+					<pre><code data-trim class="glsl">
+vec4 position;
+position.xy = vec2(0, 0);
+					</pre></code>
+					<aside class="notes">
+						<ul>
+							<li>you can also swizzle matrices, but that's for later</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
 					<section>
 						<h3>let's make an ocean</h3>
-						<p>start with a flat plane</p>
+						<p>start with a flat plane in three.js</p>
 						<pre><code data-trim class="javascript">
 var geometry = new THREE.Geometry();
 for (var x = -50; x &lt; 50; x++)
@@ -496,9 +590,15 @@ var material = new THREE.ShaderMaterial(
 					<p>usually precalculated at design-time or during loading</p>
 					<iframe data-src="samples/viewer.html?js=normals2.js&vs=basic.vs"></iframe>
 					<p>of course three.js can do it for you, and even display them for debugging</p>
+					<aside class="notes">
+						<ul>
+							<li>the normal is a vector (usually a unit vector) perpendicular to the surface</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<section>
+						<h3>let's do something fun with the normal</h3>
 						<pre><code data-trim data-src="samples/normals.vs" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
@@ -510,7 +610,9 @@ var material = new THREE.ShaderMaterial(
 					<h3>rasterization</h3>
 					<p>automatically handled by the gpu</p>
 					<img src="presentation/rasterization.svg" />
-					<p>let's execute 512 instructions for each one of these bazillion pixels, no big deal</p>
+				</section>
+				<section>
+					<p>yeaaaah if you could go ahead and execute 512 instructions for each one of those bazillion pixels, that'd be great</p>
 				</section>
 				<section>
 					<h3>fragment shader</h3>
@@ -540,11 +642,12 @@ var material = new THREE.ShaderMaterial(
 					<h3>what inputs can we have?</h3>
 					<ul>
 						<li>uniforms</li>
-						<li>data passed from the vertex shader</li>
+						<li>data passed from the vertex shader, called "varyings"</li>
 					</ul>
 				</section>
 				<section>
 					<h3>varyings</h3>
+					<img src="presentation/varyings.svg" />
 					<ul>
 						<li>vertex shader can output extra data to the pixel shader</li>
 						<li>but which vertex does the data come from?</li>
@@ -588,9 +691,20 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</section>
 				</section>
 				<section>
+					<h3>what if we pass the normal as a varying?</h3>
+					<p>we could display the xyz values as rgb</p>
+					<pre><code data-trim data-src="samples/varying-normals.vs" class="glsl"></code></pre>
+					<aside class="notes">
+						<ul>
+							<li>we have to transform the normal just like the position, but we only use the model matrix</li>
+							<li>if we used the view and projection matrices, the result would be a 2d screen-space vector, which wouldn't make sense</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
 					<section>
-						<h3>what if we pass the normal as a varying?</h3>
-						<p>we could display the xyz values as rgb</p>
+						<p>side note: in glsl you can also address vector components with rgba</p>
+						<pre><code data-trim data-src="samples/varying-normals.ps" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
@@ -608,7 +722,7 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					<section>
 						<h3>dot product</h3>
 						<p>dot(a, b) = a.x*b.x + a.y*b.y + a.z*b.z</p>
-						<p>result = cosine of the angle between a and b</p>
+						<p>if a and b are normalized, result = cosine of the angle between a and b</p>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
@@ -626,6 +740,32 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</section>
 				</section>
 				<section>
+					<h3>why doesn't the light change when the bunny rotates?</h3>
+					<p>look at the vertex shader</p>
+					<pre><code data-trim data-src="samples/varying-normals.vs" class="glsl"></code></pre>
+					<aside class="notes">
+						<ul>
+							<li>model rotation comes from the model matrix</li>
+							<li>the normal is never touched by the model matrix</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<section>
+						<h3>we need to transform the normal as well</h3>
+						<pre><code data-trim data-src="samples/varying-normals2.vs" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+						<aside class="notes">
+							<ul>
+								<li>the w component is 0, because we only want rotation, not translation</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<iframe data-src="samples/viewer.html?js=lighting.js&vs=varying-normals2.vs&ps=lighting.ps"></iframe>
+					</section>
+				</section>
+				<section>
 					<h3>texture mapping</h3>
 					<ul>
 						<li>each vertex has a 2d texture coordinate as an attribute</li>
@@ -635,6 +775,7 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</ul>
 				</section>
 				<section>
+					<h3>three.js does it again</h3>
 					<pre><code data-trim class="javascript">
 geometry.faceVertexUvs[0] = [];
 geometry.faceVertexUvs[0].push(
@@ -657,11 +798,43 @@ var uniforms =
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
 					<section>
-						<iframe data-src="samples/viewer.html?js=texture.js&vs=texture.vs&ps=texture.ps"></iframe>
+						<table id="uvs" class="matrix">
+							<tr><td>a</td><td><input type="text" size="3" value="0" /></td><td><input type="text" size="3" value="0" /></td></tr>
+							<tr><td>b</td><td><input type="text" size="3" value="1" /></td><td><input type="text" size="3" value="0" /></td></tr>
+							<tr><td>c</td><td><input type="text" size="3" value="0.5" /></td><td><input type="text" size="3" value="1" /></td></tr>
+						</table>
+						<iframe id="uv-sample" data-src="samples/viewer.html?js=texture.js&vs=texture.vs&ps=texture.ps"></iframe>
 					</section>
 				</section>
 				<section>
-					<h3>fin</h3>
+					<section>
+						<h3>animated uvs</h3>
+						<pre><code data-trim data-src="samples/texture2.vs" class="glsl"></code></pre>
+						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+					</section>
+					<section>
+						<iframe id="uv-sample" data-src="samples/viewer.html?js=texture.js&vs=texture2.vs&ps=texture.ps"></iframe>
+					</section>
+				</section>
+				<section>
+					<h3>resources</h3>
+					<ul>
+						<li>
+							render hell - <a href="http://simonschreibt.de/gat/renderhell/">http://simonschreibt.de/gat/renderhell/</a><br />
+							more nitty gritty graphics stuff
+						</li>
+						<li>
+							shadertoy - <a href="https://www.shadertoy.com">https://www.shadertoy.com</a><br />
+							easiest way to experiment with webgl shaders
+						</li>
+						<li>
+							thndl - <a href="http://thndl.com">http://thndl.com</a><br />
+							brilliant blog with tons of interactive shader samples
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>questions?</h3>
 					<a href="https://github.com/et1337/shaders">https://github.com/et1337/shaders</a>
 				</section>
 			</div>
@@ -669,7 +842,6 @@ var uniforms =
 
 		<script src="reveal.js/lib/js/head.min.js"></script>
 		<script src="reveal.js/js/reveal.min.js"></script>
-
 		<script src="presentation/index.js"></script>
 	</body>
 </html>

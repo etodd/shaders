@@ -2,5 +2,6 @@ varying vec3 varyingNormal;
 
 void main()
 {
-	gl_FragColor = vec4(varyingNormal, 1.0);
+	gl_FragColor.rgb = varyingNormal.xyz;
+	gl_FragColor.a = 1.0;
 }

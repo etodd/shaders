@@ -16,7 +16,14 @@ loader.load('bunny.js', function(geometry)
 
 	var scene = new THREE.Scene();
 
-	var material = new THREE.ShaderMaterial(
+	var lineGeometry = new THREE.Geometry();
+	lineGeometry.vertices.push(new THREE.Vector3(5, 0, 0));
+	lineGeometry.vertices.push(new THREE.Vector3(10, 0, 0));
+
+	var light = new THREE.Line(lineGeometry, new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 4 }));
+	scene.add(light);
+
+	material = new THREE.ShaderMaterial(
 	{
 		vertexShader: document.getElementById('vs').textContent,
 		fragmentShader: document.getElementById('ps').textContent,
@@ -30,12 +37,21 @@ loader.load('bunny.js', function(geometry)
 	renderer.setSize(window.innerWidth - 4, window.innerHeight - 4);
 	document.body.appendChild(renderer.domElement);
 
+	document.body.addEventListener('mousemove', function(event)
+	{
+		light.rotation.y = event.clientX * -3 * 3.1415 / 500.0;
+		light.rotation.x = event.clientY * 3 * 3.1415 / 500.0;
+	});
+
 	var clock = new THREE.Clock();
 
 	function render()
 	{
 		requestAnimationFrame(render);
 		cloud.rotation.y = clock.getElapsedTime();
+		var lightDirection = new THREE.Vector3(1, 0, 0);
+		lightDirection.applyMatrix4(light.matrix);
+		uniforms.lightDirection.value = lightDirection;
 		renderer.render(scene, camera);
 	}
 	render();
