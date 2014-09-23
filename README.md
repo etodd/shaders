@@ -5,9 +5,9 @@
 ## Installation
 
 ```shell
-git clone git@github.com/et1337/shaders.git
-git submodule update --init
+git clone https://github.com/et1337/shaders.git
 cd shaders
+git submodule update --init
 python -m SimpleHTTPServer
 # visit http://localhost:8000
 ```
