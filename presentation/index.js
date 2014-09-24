@@ -5,7 +5,10 @@
 		$(slide).find('iframe').each(function()
 		{
 			if (show)
-				$(this).attr('src', $(this).attr('data-src'));
+			{
+				if (window.location.search.indexOf('receiver') == -1) // If we're the presenter window, don't show iframes
+					$(this).attr('src', $(this).attr('data-src'));
+			}
 			else
 			{
 				var frameDoc = this.contentDocument || this.contentWindow.document;
