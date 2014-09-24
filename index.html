@@ -88,55 +88,6 @@
 					<img class="border" src="presentation/screen-space-coords.svg" />
 				</section>
 				<section>
-					<h3>immediate mode draw loop</h3>
-					<img src="presentation/draw-loop.svg" />
-					<aside class="notes">
-						<ul>
-							<li>immediate mode is the easiest way to get something on the screen</li>
-							<li>we can send vertices with rgb colors and screen-space coordinates directly to the gpu</li>
-						</ul>
-					</aside>
-				</section>
-				<section>
-					<section>
-						<pre><code data-trim class="c">
-while (true)
-{     
-	// *snip* - other things like processing window events
-
-	glClear(GL_COLOR_BUFFER_BIT); // clear screen
-
-	glColor3f(0.0f, 0.0f, 1.0f); // what color?
-	glPointSize(10.0f);
-
-	glBegin(GL_POINTS);
-	glVertex3f(0.0f, 0.8f, 0.0f);
-	glVertex3f(-0.8f, -0.8f, 0.0f);
-	glVertex3f(0.8f, -0.8f, 0.0f);
-	glEnd();
-
-	glutSwapBuffers(); // actually display it
-}
-						</code></pre>
-						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
-					</section>
-					<section>
-						<img class="border" src="presentation/immediate-mode.svg" />
-					</section>
-				</section>
-				<section>
-					<h3>vbo draw loop</h3>
-					<img src="presentation/vbo-draw-loop.svg" />
-					<aside class="notes">
-						<ul>
-							<li>vbo stands for "vertex buffer object"</li>
-							<li>vertices are stored on the gpu</li>
-							<li>much faster because we don't have to send the vertices every single frame</li>
-							<li>the draw command just points to the existing vbo</li>
-						</ul>
-					</aside>
-				</section>
-				<section>
 					<h3>webgl!</h3>
 					<ul>
 						<li>the source of these samples is self-contained</li>
@@ -145,6 +96,7 @@ while (true)
 				</section>
 				<section>
 					<section>
+						<h3>entirety of the code</h3>
 						<pre><code data-trim data-src="samples/triangle.js" class="javascript"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 						<aside class="notes">
@@ -327,11 +279,8 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 					</ul>
 				</section>
 				<section>
-					<h3>vertex shaders to the rescue</h3>
-					<p>input vertices, do math, output vertices</p>
-				</section>
-				<section>
 					<h3>baby's first vertex shader</h3>
+					<p>input vertices, do math, output vertices</p>
 					<pre><code data-trim class="glsl">
 &lt;script type="x-shader/x-vertex" id="vs"&gt;
 	void main()
@@ -377,30 +326,15 @@ var material = new THREE.ShaderMaterial(
 				</section>
 				<section>
 					<h3>glsl data types</h3>
-					<p>first, the usual suspects</p>
 					<ul>
-						<li>bool</li>
-						<li>int</li>
-						<li>uint</li>
-						<li>float</li>
-					</ul>
-					<p>they work as expected</p>
-					<aside class="notes">
-						<ul>
-							<li>single values like this are called "scalars"</li>
-						</ul>
-					</aside>
-				</section>
-				<section>
-					<h3>vector types</h3>
-					<ul>
-						<li>bvec2, bvec3, bvec4</li>
-						<li>ivec2, ivec3, ivec4</li>
-						<li>uvec2, uvec3, uvec4</li>
-						<li>vec2, vec3, vec4</li>
+						<li>bool, bvec2, bvec3, bvec4</li>
+						<li>int, ivec2, ivec3, ivec4</li>
+						<li>uint, uvec2, uvec3, uvec4</li>
+						<li>float, vec2, vec3, vec4</li>
 					</ul>
 					<aside class="notes">
 						<ul>
+							<li>single values are called "scalars"</li>
 							<li>most likely you're only going to need vec2, vec3, and vec4</li>
 						</ul>
 					</aside>
@@ -629,9 +563,6 @@ var material = new THREE.ShaderMaterial(
 					<img src="presentation/rasterization.svg" />
 				</section>
 				<section>
-					<p>yeah if you could go ahead and execute 512 instructions for each one of those bazillion pixels, that'd be great</p>
-				</section>
-				<section>
 					<h3>fragment shader</h3>
 					<ul>
 						<li>take inputs, do math, output the pixel color</li>
@@ -708,21 +639,19 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 					</section>
 				</section>
 				<section>
-					<h3>what if we pass the normal as a varying?</h3>
-					<p>we could display the xyz values as rgb</p>
-					<pre><code data-trim data-src="samples/varying-normals.vs" class="glsl"></code></pre>
-					<aside class="notes">
-						<ul>
-							<li>we have to transform the normal just like the position, but we only use the model matrix</li>
-							<li>if we used the view and projection matrices, the result would be a 2d screen-space vector, which wouldn't make sense</li>
-						</ul>
-					</aside>
-				</section>
-				<section>
 					<section>
+						<h3>what if we pass the normal as a varying?</h3>
+						<p>we could display the xyz values as rgb</p>
+						<pre><code data-trim data-src="samples/varying-normals.vs" class="glsl"></code></pre>
 						<p>side note: in glsl you can also address vector components with rgba</p>
 						<pre><code data-trim data-src="samples/varying-normals.ps" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
+						<aside class="notes">
+							<ul>
+								<li>we have to transform the normal just like the position, but we only use the model matrix</li>
+								<li>if we used the view and projection matrices, the result would be a 2d screen-space vector, which wouldn't make sense</li>
+							</ul>
+						</aside>
 					</section>
 					<section>
 						<iframe data-src="samples/viewer.html?js=vsps.js&vs=varying-normals.vs&ps=varying-normals.ps"></iframe>
@@ -748,7 +677,7 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 				</section>
 				<section>
 					<section>
-						<h3>fragment shader</h3>
+						<h3>lighting fragment shader</h3>
 						<pre><code data-trim data-src="samples/lighting.ps" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>

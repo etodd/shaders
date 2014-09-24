@@ -1,6 +1,6 @@
 var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1000, 1000);
 
-var geometry = new THREE.Geometry(); // proxy for a vbo
+var geometry = new THREE.Geometry();
 geometry.vertices.push(new THREE.Vector3(0, 0.8, 0));
 geometry.vertices.push(new THREE.Vector3(-0.8, -0.8, 0));
 geometry.vertices.push(new THREE.Vector3(0.8, -0.8, 0));
