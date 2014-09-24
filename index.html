@@ -65,14 +65,22 @@
 					</ul>
 				</section>
 				<section>
-					<h3>what we want to learn</h3>
+					<h3>what we will learn</h3>
 					<ul>
 						<li><b>no:</b> how to write a shader that does x</li>
-						<li><b>yes:</b> everything necessary to write a shader</li>
+						<li><b>yes:</b> everything necessary to write shaders</li>
 					</ul>
 				</section>
 				<section>
-					<h3>color buffer</h3>
+					<h3>pipeline overview</h3>
+					<p>animation from the excellent <a href="http://simonschreibt.de/gat/renderhell/">simon schreibt's render hell</a></p>
+					<video controls loop>
+						<source src="presentation/pipeline_overview.webm" type="video/webm;codecs=&quot;vp8&quot;">
+						<source src="presentation/pipeline_overview.mp4" type="video/mp4">
+					</video>
+				</section>
+				<section>
+					<h3>frame buffer</h3>
 					the screen is a 2d array of 24-bit numbers<br />
 					each pixel consists of three 8-bit values ranging 0-255
 					<table>
@@ -96,7 +104,7 @@
 				</section>
 				<section>
 					<section>
-						<h3>entirety of the code</h3>
+						<h3>an entire working webgl sample</h3>
 						<pre><code data-trim data-src="samples/triangle.js" class="javascript"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 						<aside class="notes">
@@ -275,7 +283,8 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 					<ul>
 						<li>so far we have been using the "fixed function pipeline"</li>
 						<li>the gpu can only do matrix multiplication</li>
-						<li>if we want to move individual vertices, we have to update the vbo</li>
+						<li>if we want to move individual vertices, we have to send data from the cpu to gpu (expensive)</li>
+						<li>what if we instead run a program on the gpu itself?</li>
 					</ul>
 				</section>
 				<section>
@@ -565,7 +574,7 @@ var material = new THREE.ShaderMaterial(
 				<section>
 					<h3>fragment shader</h3>
 					<ul>
-						<li>take inputs, do math, output the pixel color</li>
+						<li>gpu program, executed for each rasterized pixel in a triangle</li>
 						<li>output is four floats (rgba) ranging from 0 to 1</li>
 					</ul>
 					<aside class="notes">
