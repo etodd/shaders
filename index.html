@@ -40,7 +40,7 @@
 					&#8592;&#8593;&#8595;&#8594;
 				</section>
 				<section>
-					<h3>talk at me if you're into</h3>
+					<h3>i'd love to chat if you're into</h3>
 					<ul>
 						<li>event-driven servers</li>
 						<li>deployment automation</li>
@@ -68,12 +68,12 @@
 					<h3>what we want to learn</h3>
 					<ul>
 						<li><b>no:</b> how to write a shader that does x</li>
-						<li><b>yes:</b> underlying concepts</li>
+						<li><b>yes:</b> everything necessary to write a shader</li>
 					</ul>
 				</section>
 				<section>
-					<h3>frame buffer</h3>
-					the screen is a buffer of 24-bit numbers<br />
+					<h3>color buffer</h3>
+					the screen is a 2d array of 24-bit numbers<br />
 					each pixel consists of three 8-bit values ranging 0-255
 					<table>
 						<tr><td>red</td><td><input type="text" class="rgb r" size="3" maxlength="3" value="0" /></td></tr>
@@ -84,7 +84,7 @@
 					</div>
 				</section>
 				<section>
-					<h3>screen-space coordinates</h3>
+					<h3>normalized device coordinates</h3>
 					<img class="border" src="presentation/screen-space-coords.svg" />
 				</section>
 				<section>
@@ -346,6 +346,7 @@ geometry.vertices.push(new THREE.Vector3(80, 80, 80));
 							<li>we have to convert the 3d position to a 4d vector with 1 for the fourth dimension</li>
 							<li>why? to make translation work properly</li>
 							<li>gl_PointSize sets the point size</li>
+							<li>matrix multiplication is right-associative, it goes right to left</li>
 						</ul>
 					</aside>
 				</section>
@@ -382,7 +383,6 @@ var material = new THREE.ShaderMaterial(
 						<li>int</li>
 						<li>uint</li>
 						<li>float</li>
-						<li>double</li>
 					</ul>
 					<p>they work as expected</p>
 					<aside class="notes">
@@ -398,7 +398,6 @@ var material = new THREE.ShaderMaterial(
 						<li>ivec2, ivec3, ivec4</li>
 						<li>uvec2, uvec3, uvec4</li>
 						<li>vec2, vec3, vec4</li>
-						<li>dvec2, dvec3, dvec4</li>
 					</ul>
 					<aside class="notes">
 						<ul>
@@ -417,7 +416,7 @@ var material = new THREE.ShaderMaterial(
 mat4x4 world;
 mat4x4 view;
 mat4x4 projection;
-mat4x4 final = world * view * projection;
+mat4x4 final = projection * view * world;
 					</pre></code>
 					<p>you can also multiply vectors with them if they are the right size</p>
 					<pre><code data-trim class="glsl">
@@ -439,11 +438,18 @@ position = world * vec4(position, 1); // okay
 					<pre><code data-trim class="glsl">
 vec3 position;
 float height = position.y;
+// or:
+height = position[1];
 					</pre></code>
 					<p>access multiple components simultaneously</p>
 					<pre><code data-trim class="glsl">
 vec4 position;
 position.xy = vec2(0, 0);
+					</pre></code>
+					<p>mix and match</p>
+					<pre><code data-trim class="glsl">
+vec4 a, b;
+a.zyx = b.yyy;
 					</pre></code>
 					<aside class="notes">
 						<ul>
@@ -480,7 +486,7 @@ for (var x = -50; x &lt; 50; x++)
 				<section>
 					<h3>uniforms</h3>
 					<ul>
-						<li>so named because they do not change from vertex to vertex</li>
+						<li>so named because they remain constant for the entire draw call</li>
 						<li>we will pass one float into the shader each frame, representing time</li>
 						<li>every vertex will have access to this value</li>
 					</ul>
@@ -531,11 +537,11 @@ render();
 					<h3>attributes to the rescue</h3>
 					<p><b>vertex declaration</b> specifies what data is attached to each vertex</p>
 					<table>
-						<tr><td>position</td><td>float3</td></tr>
-						<tr><td>normal</td><td>float3</td></tr>
-						<tr><td>texture coordinate</td><td>float2</td></tr>
-						<tr><td>blend weights</td><td>float4</td></tr>
-						<tr><td>instance transform</td><td>float4</td></tr>
+						<tr><td>position</td><td>vec3</td></tr>
+						<tr><td>normal</td><td>vec3</td></tr>
+						<tr><td>texture coordinate</td><td>vec2</td></tr>
+						<tr><td>blend weights</td><td>vec4</td></tr>
+						<tr><td>instance transform</td><td>vec4</td></tr>
 						<tr><td>flux compression</td><td>float</td></tr>
 					</table>
 				</section>
@@ -586,6 +592,11 @@ var material = new THREE.ShaderMaterial(
 					<h3>index buffer</h3>
 					<input type="text" id="indices" value="[0, 1, 2]"/>
 					<iframe data-src="samples/viewer.html?js=indices.js" id="index-buffer-sample"></iframe>
+					<aside class="notes">
+						<ul>
+							<li>gpu culls faces where the vertices are winding clockwise</li>
+						</ul>
+					</aside>
 				</section>
 				<section>
 					<h3>the most common vertex attribute</h3>
@@ -618,7 +629,7 @@ var material = new THREE.ShaderMaterial(
 					<img src="presentation/rasterization.svg" />
 				</section>
 				<section>
-					<p>yeaaaah if you could go ahead and execute 512 instructions for each one of those bazillion pixels, that'd be great</p>
+					<p>yeah if you could go ahead and execute 512 instructions for each one of those bazillion pixels, that'd be great</p>
 				</section>
 				<section>
 					<h3>fragment shader</h3>
@@ -774,7 +785,7 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 				<section>
 					<h3>texture mapping</h3>
 					<ul>
-						<li>each vertex has a 2d texture coordinate as an attribute</li>
+						<li>we can give each vertex a 2d texture coordinate as an attribute</li>
 						<li>we pass the coordinate to the fragment shader</li>
 						<li>the gpu automagically interpolates to get the coordinate for each pixel</li>
 						<li>fragment shader samples the texture at that coordinate to get final color</li>
@@ -827,7 +838,7 @@ var uniforms =
 					<ul>
 						<li>
 							render hell - <a href="http://simonschreibt.de/gat/renderhell/">http://simonschreibt.de/gat/renderhell/</a><br />
-							more nitty gritty graphics stuff
+							everything you ever wanted to know about the graphics pipeline
 						</li>
 						<li>
 							shadertoy - <a href="https://www.shadertoy.com">https://www.shadertoy.com</a><br />
@@ -836,6 +847,10 @@ var uniforms =
 						<li>
 							thndl - <a href="http://thndl.com">http://thndl.com</a><br />
 							brilliant blog with tons of interactive shader samples
+						</li>
+						<li>
+							three.js - <a href="http://threejs.org/">http://threejs.org/</a><br />
+							tons of samples
 						</li>
 					</ul>
 				</section>

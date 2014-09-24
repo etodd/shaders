@@ -70,11 +70,6 @@ body
 /*********************************************
  * PROGRESS BAR
  *********************************************/
-.reveal .progress
-{
-	background: #f00;
-}
-
 .reveal .progress span
 {
 	background: #8df;
