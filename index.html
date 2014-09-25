@@ -36,8 +36,9 @@
 						| <a href="http://et1337.com">et1337.com</a>
 						| <a href="http://twitter.com/et1337">@et1337</a>
 					</small>
+					<p>&#8592;&#8593;&#8595;&#8594;</p>
 					<br />
-					&#8592;&#8593;&#8595;&#8594;
+					<small><p>follow along at <a href="http://et1337.github.io/shaders">et1337.github.io/shaders</a></p></small>
 				</section>
 				<section>
 					<h3>i'd love to chat if you're into</h3>
@@ -533,7 +534,8 @@ var material = new THREE.ShaderMaterial(
 				<section>
 					<h3>connecting the dots</h3>
 					<ul>
-						<li>everything is made of triangles</li>
+						<li>so far we've sent individual vertices into a vertex buffer object (vbo) without connecting them</li>
+						<li>everything is made of triangles, even rectangles are constructed from two triangles</li>
 						<li>a triangle is basically three integers which point to vertices in the vbo</li>
 					</ul>
 				</section>
@@ -640,7 +642,9 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 				</section>
 				<section>
 					<section>
+						<p>vertex shader:</p>
 						<pre><code data-trim data-src="samples/varying.vs" class="glsl"></code></pre>
+						<p>fragment shader:</p>
 						<pre><code data-trim data-src="samples/varying.ps" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 					</section>
@@ -656,9 +660,9 @@ geometry.faces.push(new THREE.Face3(0, 1, 2));
 				<section>
 					<section>
 						<h3>what if we pass the normal as a varying?</h3>
-						<p>we could display the xyz values as rgb</p>
+						<p>we could display the xyz values as rgb. vertex shader:</p>
 						<pre><code data-trim data-src="samples/varying-normals.vs" class="glsl"></code></pre>
-						<p>side note: in glsl you can also address vector components with rgba</p>
+						<p>fragment shader. in glsl we can also address vector components with rgba</p>
 						<pre><code data-trim data-src="samples/varying-normals.ps" class="glsl"></code></pre>
 						<a href="#" class="navigate-down"><img src="presentation/arrow.svg" /></a>
 						<aside class="notes">
