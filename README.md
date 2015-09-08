@@ -1,11 +1,11 @@
 # Shaders - How Do They Work?
 
-[Click through the slides](http://et1337.github.io/shaders/)
+[Click through the slides](http://etodd.github.io/shaders/)
 
 ## Installation
 
 ```shell
-git clone https://github.com/et1337/shaders.git
+git clone https://github.com/etodd/shaders.git
 cd shaders
 git submodule update --init
 python -m SimpleHTTPServer
